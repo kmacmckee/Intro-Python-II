@@ -1,4 +1,5 @@
 from room import Room
+from player import Player
 
 # Declare all the rooms
 
@@ -39,6 +40,11 @@ room['treasure'].s_to = room['narrow']
 
 # Make a new player object that is currently in the 'outside' room.
 
+player_name = input("Please enter your name:")
+player1 = Player(player_name, room['outside'])
+print(f"You find yourself at {player1.current_room.name}")
+print(player1.current_room.description)
+
 # Write a loop that:
 #
 # * Prints the current room name
@@ -49,3 +55,63 @@ room['treasure'].s_to = room['narrow']
 # Print an error message if the movement isn't allowed.
 #
 # If the user enters "q", quit the game.
+
+def get_user_input():
+    user_input = input("Please press W (To move North), D (To move East), S (To move South), A (To move West), or Q to Quit:\n")
+    
+    switcher = {
+        "q" : "quit",
+        "w" : "north",
+        "d" : "east",
+        "s" : "south",
+        "a" : "west"
+    }
+    return switcher.get(user_input, "nothing")
+
+
+
+should_quit = False
+while should_quit != True:
+
+    command = get_user_input()
+    
+    if command == "quit":
+        should_quit == True
+        break
+    elif command == "nothing":
+        print("ERROR: You can't do that!")
+        print(f"You're standing in {player1.current_room.name}")
+    elif command == "north":
+        if player1.current_room.s_to != None:
+            next_room = player1.current_room.s_to
+            player1.current_room = next_room
+            print(f"You move to: {player1.current_room.name}, {player1.current_room.description}")
+        else:
+            print("You ran face first into a wall. Oops")
+            print(f"You're standing in {player1.current_room.name}")
+    elif command == "east":
+        if player1.current_room.w_to != None:
+            next_room = player1.current_room.w_to
+            player1.current_room = next_room
+            print(f"You move to: {player1.current_room.name}, {player1.current_room.description}")
+        else:
+            print("You ran face first into a wall. Oops")
+            print(f"You're standing in {player1.current_room.name}")
+    elif command == "south":
+        if player1.current_room.n_to != None:
+            next_room = player1.current_room.n_to
+            player1.current_room = next_room
+            print(f"You move to: {player1.current_room.name}, {player1.current_room.description}")
+        else:
+            print("You ran face first into a wall. Oops")
+            print(f"You're standing in {player1.current_room.name}")
+    elif command == "west":
+        if player1.current_room.e_to != None:
+            next_room = player1.current_room.e_to
+            player1.current_room = next_room
+            print(f"You move to: {player1.current_room.name}, {player1.current_room.description}")
+        else:
+            print("You ran face first into a wall. Oops")
+            print(f"You're standing in {player1.current_room.name}")
+
+print("GAME OVER")
